@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "ADK Web: Agents",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "google.adk.cli.__main__",
+            "args": [
+                "web",
+                "agents"
+            ],
+            "autoStartBrowser": true
+        },
+        {
+            "name": "ADK Run: Basic Agents",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "google.adk.cli.__main__",
+            "args": [
+                "run",
+                "agents/basic_agent"
+            ],
+            "autoStartBrowser": false
+        }
+    ]
+}
