@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/google/adk-python/refs/heads/main/src/google/adk/agents/config_schemas/AgentConfig.json
+agent_class: LlmAgent
+model: gemini-2.5-flash
+name: google_search_agent
+description: Help user to find relavent information using Google Search.
+instruction: |
+  You are a google search assistant. Use the search tool to find relevant information for the user and deliver clear, consice answers to user questions.
+tools:
+  - name: google_search

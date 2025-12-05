@@ -55,8 +55,54 @@ More agent examples: https://github.com/search?q=repo%3Agoogle%2Fadk-python+path
 
 ## [AI Agent With Google Search](https://x.com/Saboo_Shubham_/status/1971038699329908885)
 
+Adding Google Search tool is straightforward as ADK has built-in support for it.
+
+```yaml
+tools:
+  - name: google_search
+```
+
+However, I found that there is no tool use inside the agent response in the web UI.
+
+## [Research Agent with MCP Tools](https://x.com/Saboo_Shubham_/status/1971038699329908885)
+
+Instead of using `firecrawl-mcp` tool, i switched to `brave-mcp` tool for web scraping and searching.
+
+```yaml
+tools:
+  - name: MCPToolset
+    args:
+      stdio_server_params:
+        command: "docker"
+        args:
+          - run
+          - -i
+          - --rm
+          - -e
+          - BRAVE_MCP_TRANSPORT
+          - -e
+          - BRAVE_API_KEY
+          - mcp/brave-search
+        env:
+          BRAVE_MCP_TRANSPORT: "stdio"
+          BRAVE_API_KEY: "${BRAVE_API_KEY}"
+```
+
+However, the environment variable using `BRAVE_API_KEY: "${BRAVE_API_KEY}"` does not seem to work I was expecting which is loading the API key from the `.env` file. Instead, the env variable inside the container is
+
+```sh
+$ env | grep BRAVE_API_KEY
+BRAVE_API_KEY=${BRAVE_API_KEY}
+```
+
+To workaround this, I hardcoded the API key in the tool config as below:
+
+```yaml
+BRAVE_API_KEY: "******************************"
+```
+
+To obtain a API key go to : https://api-dashboard.search.brave.com/app/keys
 
 ## Challanges
 - [ ] Deploy the Agent to Google Cloud Run
 - [ ] Deploy the Agent to Vertex AI
-- [ ] Deploy the Agent to AWS AgentCore.

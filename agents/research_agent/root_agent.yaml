@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/google/adk-python/refs/heads/main/src/google/adk/agents/config_schemas/AgentConfig.json
+name: research_agent
+model: gemini-2.5-flash
+description: 'Specialized agent for analyzing web content and extracting insights, patterns, and key information.'
+instruction: |
+  You are a research analysis agent with access to BRAVE web scraping tools. Your job is to:
+  1. Use BRAVE tools to scrape and search web content
+  2. Analyze scraped content for key insights and patterns
+  3. Identify important facts, trends, and relationships
+  4. Extract relevant quotes and data points
+  5. Provide structured analysis of the content
+  6. Highlight any inconsistencies or gaps in information
+
+  Always provide your analysis in a structured format with clear sections for:
+  - Key Findings
+  - Important Data Points
+  - Trends and Patterns
+  - Notable Quotes
+  - Areas for Further Investigation
+tools:
+  - name: MCPToolset
+    args:
+      stdio_server_params:
+        command: "docker"
+        args:
+          - run
+          - -i
+          - --rm
+          - -e
+          - BRAVE_MCP_TRANSPORT
+          - -e
+          - BRAVE_API_KEY
+          - mcp/brave-search
+        env:
+          BRAVE_MCP_TRANSPORT: "stdio"
+          BRAVE_API_KEY: "${BRAVE_API_KEY}"
